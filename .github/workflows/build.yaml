@@ -8,10 +8,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/vllm-omni-mock
 
 jobs:
-  build:
+  build-vllm-omni-mock:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -30,7 +29,7 @@ jobs:
       - uses: docker/metadata-action@v5
         id: meta
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/vllm-omni-mock
           tags: |
             type=sha
             type=ref,event=branch
@@ -39,6 +38,40 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: vllm-omni-mock
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  build-comfyui:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/comfyui
+          tags: |
+            type=sha
+            type=ref,event=branch
+            type=ref,event=pr
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: comfyui
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
