@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: Copyright contributors to the vLLM project
 import time
+from os import getenv
 from http import HTTPStatus
 from typing import Annotated
 
@@ -30,7 +31,7 @@ async def show_available_models(raw_request: Request) -> JSONResponse:
             "object": "list",
             "data": [
                 {
-                    "id": "mock",
+                    "id": getenv("MODEL", "mock"),
                     "object": "model",
                     "created": 0,
                     "owned_by": "vllm-omni",
