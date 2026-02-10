@@ -8,6 +8,11 @@ kubectl patch configmap/config-network \
   --type merge \
   --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
 
+kubectl patch configmap/config-domain \
+  --namespace knative-serving \
+  --type merge \
+  --patch '{"data":{"127.0.0.1.nip.io":""}}'
+
 kubectl patch service/kourier \
   --namespace kourier-system \
   --type merge \
