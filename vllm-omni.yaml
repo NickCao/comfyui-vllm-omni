@@ -8,6 +8,7 @@ spec:
     spec:
       containers:
         - image: ghcr.io/nickcao/comfyui-vllm-omni/vllm-omni-mock:main
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
@@ -23,6 +24,7 @@ spec:
     spec:
       containers:
         - image: ghcr.io/nickcao/comfyui-vllm-omni/vllm-omni-mock:main
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
           env:
@@ -38,5 +40,6 @@ spec:
     spec:
       containers:
         - image: ghcr.io/nickcao/comfyui-vllm-omni/comfyui:main
+          imagePullPolicy: Always
           ports:
             - containerPort: 8188
