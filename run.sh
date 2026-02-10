@@ -1,0 +1,16 @@
+#!/bin/sh
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.21.0/serving-crds.yaml
+kubectl apply -f https://github.com/knative/serving/releases/download/knative-v1.21.0/serving-core.yaml
+kubectl apply -f https://github.com/knative-extensions/net-kourier/releases/download/knative-v1.21.0/kourier.yaml
+
+kubectl patch configmap/config-network \
+  --namespace knative-serving \
+  --type merge \
+  --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
+
+kubectl patch service/kourier \
+  --namespace kourier-system \
+  --type merge \
+  --patch '{"spec":{"type":"ClusterIP"}}'
+
+kubectl apply -f vllm-omni.yaml
