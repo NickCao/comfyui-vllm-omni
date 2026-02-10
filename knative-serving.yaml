@@ -9,3 +9,33 @@ kind: KnativeServing
 metadata:
   name: knative-serving
   namespace: knative-serving
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: vllm-omni-qwen-image-2512
+spec:
+  template:
+    spec:
+      containers:
+        - image: ghcr.io/nickcao/comfyui-vllm-omni/vllm-omni-mock:main
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL
+              value: "Qwen/Qwen-Image-2512"
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: vllm-omni-z-image-turbo
+spec:
+  template:
+    spec:
+      containers:
+        - image: ghcr.io/nickcao/comfyui-vllm-omni/vllm-omni-mock:main
+          ports:
+            - containerPort: 8000
+          env:
+            - name: MODEL
+              value: "Tongyi-MAI/Z-Image-Turbo"
