@@ -28,3 +28,15 @@ spec:
           env:
             - name: MODEL
               value: "Tongyi-MAI/Z-Image-Turbo"
+---
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: comfyui
+spec:
+  template:
+    spec:
+      containers:
+        - image: ghcr.io/nickcao/comfyui-vllm-omni/comfyui:main
+          ports:
+            - containerPort: 8188
