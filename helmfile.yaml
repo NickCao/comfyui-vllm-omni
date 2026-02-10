@@ -1,0 +1,9 @@
+repositories:
+  - name: knative-operator
+    url: https://knative.github.io/operator
+
+releases:
+  - name: knative-operator
+    namespace: knative-operator
+    createNamespace: true
+    chart: knative-operator/knative-operator
