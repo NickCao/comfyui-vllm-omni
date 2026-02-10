@@ -19,3 +19,6 @@ kubectl patch service/kourier \
   --patch '{"spec":{"type":"ClusterIP"}}'
 
 kubectl apply -f vllm-omni.yaml
+
+# kubectl -n kourier-system port-forward services/kourier-internal 8080:80
+# Go to http://comfyui.default.127.0.0.1.nip.io:8080/
