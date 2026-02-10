@@ -1,9 +1,24 @@
 repositories:
+  - name: istio
+    url: https://istio-release.storage.googleapis.com/charts
   - name: knative-operator
     url: https://knative.github.io/operator
-
 releases:
   - name: knative-operator
     namespace: knative-operator
     createNamespace: true
     chart: knative-operator/knative-operator
+  - name: istio-base
+    namespace: istio-system
+    createNamespace: true
+    wait: true
+    chart: istio/base
+    set:
+      - name: defaultRevision
+        value: default
+  - name: istiod
+    namespace: istio-system
+    wait: true
+    chart: istio/istiod
+    needs:
+      - istio-base
