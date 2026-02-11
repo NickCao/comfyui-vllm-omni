@@ -18,6 +18,8 @@ kubectl patch service/kourier \
   --type merge \
   --patch '{"spec":{"type":"ClusterIP"}}'
 
+kubectl -n knative-serving wait --for=condition=Available deployment.apps/webhook
+
 kubectl apply -f vllm-omni.yaml
 
 # kubectl -n kourier-system port-forward services/kourier-internal 8080:80
