@@ -35,6 +35,24 @@ spec:
             - name: MODEL
               value: "Tongyi-MAI/Z-Image-Turbo"
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: comfyui
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: comfyui
+subjects:
+  - kind: ServiceAccount
+    name: comfyui
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: knative-serving-namespaced-view
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
@@ -42,6 +60,7 @@ metadata:
 spec:
   template:
     spec:
+      serviceAccountName: comfyui
       containers:
         - image: ghcr.io/nickcao/comfyui-vllm-omni/comfyui:main
           imagePullPolicy: Always
