@@ -3,6 +3,8 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: vllm-omni-qwen-image-2512
+  labels:
+    example.com/vllm-omni: "true"
 spec:
   template:
     spec:
@@ -19,6 +21,8 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: vllm-omni-z-image-turbo
+  labels:
+    example.com/vllm-omni: "true"
 spec:
   template:
     spec:
